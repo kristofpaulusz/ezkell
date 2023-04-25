@@ -4,17 +4,22 @@
  */
 package gui_nezet;
 
+import javax.swing.SpinnerNumberModel;
+import modell.Konyv;
+import modell.Konyvtar;
+
 /**
  *
  * @author PauluszKristófCsanád
  */
 public class KonyvtarForm extends javax.swing.JFrame {
-
+    private Konyvtar model;
     /**
      * Creates new form KonyvtarForm
      */
     public KonyvtarForm() {
         initComponents();
+        model = new Konyvtar();
     }
 
     /**
@@ -37,6 +42,8 @@ public class KonyvtarForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         ukBt = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        cimTField = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -54,11 +61,24 @@ public class KonyvtarForm extends javax.swing.JFrame {
 
         jTextField1.setEditable(false);
 
+        sz1TF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                sz1TFKeyPressed(evt);
+            }
+        });
+
         sz2TF.setEditable(false);
 
         jLabel4.setText("kiadás éve");
 
         ukBt.setText("ujKonyv");
+        ukBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ukBtActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("cim");
 
         javax.swing.GroupLayout ukPanelLayout = new javax.swing.GroupLayout(ukPanel);
         ukPanel.setLayout(ukPanelLayout);
@@ -70,22 +90,29 @@ public class KonyvtarForm extends javax.swing.JFrame {
                     .addGroup(ukPanelLayout.createSequentialGroup()
                         .addGroup(ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1)
-                            .addComponent(sz1TF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                            .addComponent(sz1TF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                             .addGroup(ukPanelLayout.createSequentialGroup()
-                                .addGroup(ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(sz2TF, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
+                    .addGroup(ukPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(103, 103, 103)
+                        .addComponent(cimTField, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(sz2TF, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(ukPanelLayout.createSequentialGroup()
+                        .addGroup(ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(ukPanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(26, 26, 26)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ukBt)
-                        .addGap(68, 68, 68))))
+                        .addGap(73, 73, 73))))
         );
         ukPanelLayout.setVerticalGroup(
             ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,11 +121,15 @@ public class KonyvtarForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sz1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sz2TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cimTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addGroup(ukPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -106,9 +137,9 @@ public class KonyvtarForm extends javax.swing.JFrame {
                         .addComponent(ukBt)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addGap(21, 21, 21))
         );
 
         tPane.addTab("új könyv", ukPanel);
@@ -129,19 +160,37 @@ public class KonyvtarForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tPane))
+                .addComponent(tPane)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
-                .addComponent(tPane, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tPane, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sz1TFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sz1TFKeyPressed
+            sz2TF.setEditable(true);
+    }//GEN-LAST:event_sz1TFKeyPressed
+
+    private void ukBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ukBtActionPerformed
+      Integer ev = (Integer) jSpinner1.getValue();
+        if (sz2TF.getText().equals("")) {
+            model.addKonyv(new Konyv(cimTField.getText(), sz1TF.getText(), ev));
+        }
+        else {
+            String[] szerzok = {sz1TF.getText(), sz2TF.getText()};
+            model.addKonyv(new Konyv(cimTField.getText(), szerzok, ev));
+        }
+        System.out.println(model.getKonyvek());
+    }//GEN-LAST:event_ukBtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,10 +228,12 @@ public class KonyvtarForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cimTField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
