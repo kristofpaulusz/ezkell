@@ -4,6 +4,7 @@
  */
 package gui_nezet;
 
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import modell.Konyv;
 import modell.Konyvtar;
@@ -181,15 +182,14 @@ public class KonyvtarForm extends javax.swing.JFrame {
     }//GEN-LAST:event_sz1TFKeyPressed
 
     private void ukBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ukBtActionPerformed
-      Integer ev = (Integer) jSpinner1.getValue();
-        if (sz2TF.getText().equals("")) {
-            model.addKonyv(new Konyv(cimTField.getText(), sz1TF.getText(), ev));
+        if (!model.benneVan(cimTField.getText())) {
+            JOptionPane.showMessageDialog(this, "Már benne van a könyvtárban");
         }
         else {
-            String[] szerzok = {sz1TF.getText(), sz2TF.getText()};
-            model.addKonyv(new Konyv(cimTField.getText(), szerzok, ev));
-        }
-        System.out.println(model.getKonyvek());
+            felvitel();
+        } 
+            
+        
     }//GEN-LAST:event_ukBtActionPerformed
 
     /**
@@ -246,4 +246,15 @@ public class KonyvtarForm extends javax.swing.JFrame {
     private javax.swing.JButton ukBt;
     private javax.swing.JPanel ukPanel;
     // End of variables declaration//GEN-END:variables
+
+    private void felvitel() {
+        Integer ev = (Integer) jSpinner1.getValue();
+        if (sz2TF.getText().equals("")) {
+            model.addKonyv(new Konyv(cimTField.getText(), sz1TF.getText(), ev));
+        }
+        else {
+            String[] szerzok = {sz1TF.getText(), sz2TF.getText()};
+            model.addKonyv(new Konyv(cimTField.getText(), szerzok, ev));
+        }
+    }
 }

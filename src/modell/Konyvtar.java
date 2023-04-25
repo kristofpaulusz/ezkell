@@ -77,5 +77,17 @@ public class Konyvtar implements Serializable {
         }
         return null;
     }
+
+    public boolean benneVan(String text) {
+        boolean ujKonyv = true;
+        int index = 0;
+        while (ujKonyv && index < konyvek.size()) {
+            if (konyvek.get(index).getCim().equals(text)) {
+                ujKonyv = false;
+            }
+            index += 1;
+        }
+        return ujKonyv;
+    }
     
 }
